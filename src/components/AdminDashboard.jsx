@@ -7,7 +7,7 @@ import { useAuth } from '../hooks/usePortal'
 // WHATSAPP FAB
 // ================================================================
 export function WhatsAppFAB() {
-  const WA_NUMBER = '919876543210' // ← replace with your number
+  const WA_NUMBER = '+917013384876' // ← replace with your number
   return (
     <motion.a
       href={`https://wa.me/${WA_NUMBER}?text=Hi! I found you on your website and I'd like to discuss a project.`}
@@ -41,8 +41,8 @@ function AdminLogin({ auth, onBack }) {
   const [pass, setPass] = useState('')
 
   const submit = async () => {
-    try { 
-      await auth.login(email, pass) 
+    try {
+      await auth.login(email, pass)
     } catch (err) {
       console.error('Login error:', err)
     }
@@ -52,17 +52,17 @@ function AdminLogin({ auth, onBack }) {
     <div style={{ minHeight: '100vh', background: 'var(--bg)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 40 }}>
       <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
         style={{ background: 'var(--s1)', border: '1px solid var(--bd)', borderRadius: 20, padding: 48, width: '100%', maxWidth: 440 }}>
-        
+
         <div style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 22, textAlign: 'center', marginBottom: 32 }}>
           Admin<b style={{ color: 'var(--coral)' }}>.auth</b>
         </div>
-        
+
         <div style={{ marginBottom: 14 }}>
           <label style={{ fontSize: 11, fontWeight: 700, textTransform: 'uppercase', letterSpacing: 1.5, color: 'var(--sub)', display: 'block', marginBottom: 7 }}>Admin Email</label>
           <input type="email" value={email} onChange={e => setEmail(e.target.value)} onKeyDown={e => e.key === 'Enter' && submit()}
             style={{ width: '100%', background: 'var(--bg)', border: '1px solid var(--bd)', borderRadius: 10, padding: '13px 16px', fontSize: 14, color: 'var(--tx)', outline: 'none' }} />
         </div>
-        
+
         <div style={{ marginBottom: 20 }}>
           <label style={{ fontSize: 11, fontWeight: 700, textTransform: 'uppercase', letterSpacing: 1.5, color: 'var(--sub)', display: 'block', marginBottom: 7 }}>Password</label>
           <input type="password" value={pass} onChange={e => setPass(e.target.value)} onKeyDown={e => e.key === 'Enter' && submit()}
@@ -75,7 +75,7 @@ function AdminLogin({ auth, onBack }) {
           style={{ width: '100%', padding: 15, background: 'var(--coral)', color: '#fff', border: 'none', borderRadius: 100, fontWeight: 700, cursor: 'none' }}>
           {auth.loading ? 'Authenticating...' : 'Enter Dashboard →'}
         </button>
-        
+
         <button onClick={onBack} style={{ width: '100%', marginTop: 12, background: 'none', border: 'none', color: 'var(--sub)', fontSize: 13, cursor: 'none' }}>← Back to Site</button>
       </motion.div>
     </div>
@@ -134,9 +134,9 @@ export function AdminDashboard({ onBack }) {
   const [loading, setLoading] = useState(true)
   const [viewClient, setViewClient] = useState(null)
 
-  useEffect(() => { 
+  useEffect(() => {
     if (auth.user && auth.profile?.role === 'admin') {
-      loadData() 
+      loadData()
     }
   }, [auth.user, auth.profile])
 
@@ -148,7 +148,7 @@ export function AdminDashboard({ onBack }) {
         supabase.from('projects').select('*, profiles(full_name, company)').order('created_at', { ascending: false }),
         supabase.from('profiles').select('*').eq('role', 'client').order('created_at', { ascending: false }),
       ])
-      
+
       setLeads(leadsRes.data || [])
       setProjects(projectsRes.data || [])
       setClients(clientsRes.data || [])
@@ -165,7 +165,7 @@ export function AdminDashboard({ onBack }) {
   }
 
   if (auth.loading) return <div style={{ height: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>Loading...</div>
-  
+
   if (!auth.user || auth.profile?.role !== 'admin') {
     return <AdminLogin auth={auth} onBack={onBack} />
   }
@@ -202,14 +202,14 @@ export function AdminDashboard({ onBack }) {
             </button>
           ))}
           <button onClick={auth.logout} style={{
-              width: '100%', display: 'flex', alignItems: 'center', gap: 10,
-              padding: '10px 14px', borderRadius: 10, border: 'none', cursor: 'none',
-              background: 'transparent',
-              color: 'var(--sub)',
-              fontSize: 13, fontWeight: 400,
-              marginTop: 'auto', textAlign: 'left', fontFamily: 'var(--font-body)',
-              transition: 'all .2s',
-            }}
+            width: '100%', display: 'flex', alignItems: 'center', gap: 10,
+            padding: '10px 14px', borderRadius: 10, border: 'none', cursor: 'none',
+            background: 'transparent',
+            color: 'var(--sub)',
+            fontSize: 13, fontWeight: 400,
+            marginTop: 'auto', textAlign: 'left', fontFamily: 'var(--font-body)',
+            transition: 'all .2s',
+          }}
             onMouseEnter={e => e.currentTarget.style.color = 'var(--coral)'}
             onMouseLeave={e => e.currentTarget.style.color = 'var(--sub)'}
           >
@@ -225,180 +225,180 @@ export function AdminDashboard({ onBack }) {
             ) : (
               <motion.div key={tab} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} transition={{ duration: .2 }}>
 
-              {/* ── OVERVIEW ── */}
-              {tab === 'overview' && (
-                <div>
-                  <SectionTitle>Dashboard Overview</SectionTitle>
-                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: 12, marginBottom: 28 }}>
-                    {[
-                      { n: leads.filter(l => l.status === 'new').length, l: 'New Leads', c: 'var(--coral)' },
-                      { n: projects.filter(p => p.status !== 'Completed').length, l: 'Active Projects', c: 'var(--violet)' },
-                      { n: clients.length, l: 'Total Clients', c: 'var(--lime)' },
-                      { n: leads.length, l: 'Total Leads', c: 'var(--yellow)' },
-                    ].map(s => (
-                      <div key={s.l} style={{ background: 'var(--s1)', border: '1px solid var(--bd)', borderRadius: 14, padding: 24 }}>
-                        <div style={{ fontFamily: 'var(--font-display)', fontSize: 40, fontWeight: 700, color: s.c, lineHeight: 1, marginBottom: 4 }}>{loading ? '...' : s.n}</div>
-                        <div style={{ fontSize: 12, color: 'var(--sub)' }}>{s.l}</div>
-                      </div>
-                    ))}
-                  </div>
-
-                  <div style={{ display: 'grid', gridTemplateColumns: '1.4fr 1fr', gap: 16 }}>
-                    {/* Recent leads */}
-                    <AdminCard title="Recent Leads" action={{ label: 'View All', onClick: () => setTab('leads') }}>
-                      {leads.slice(0, 5).map(l => (
-                        <div key={l.id} style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '10px 0', borderBottom: '1px solid var(--bd)' }}>
-                          <div style={{ flex: 1 }}>
-                            <div style={{ fontSize: 13, fontWeight: 600, color: 'var(--tx)', marginBottom: 2 }}>{l.name}</div>
-                            <div style={{ fontSize: 11, color: 'var(--sub)' }}>{l.service} · {l.email}</div>
-                          </div>
-                          <span style={{ fontSize: 10, fontWeight: 700, padding: '3px 10px', borderRadius: 100, background: STATUS_CONFIG[l.status]?.bg, color: STATUS_CONFIG[l.status]?.color }}>
-                            {STATUS_CONFIG[l.status]?.label}
-                          </span>
+                {/* ── OVERVIEW ── */}
+                {tab === 'overview' && (
+                  <div>
+                    <SectionTitle>Dashboard Overview</SectionTitle>
+                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: 12, marginBottom: 28 }}>
+                      {[
+                        { n: leads.filter(l => l.status === 'new').length, l: 'New Leads', c: 'var(--coral)' },
+                        { n: projects.filter(p => p.status !== 'Completed').length, l: 'Active Projects', c: 'var(--violet)' },
+                        { n: clients.length, l: 'Total Clients', c: 'var(--lime)' },
+                        { n: leads.length, l: 'Total Leads', c: 'var(--yellow)' },
+                      ].map(s => (
+                        <div key={s.l} style={{ background: 'var(--s1)', border: '1px solid var(--bd)', borderRadius: 14, padding: 24 }}>
+                          <div style={{ fontFamily: 'var(--font-display)', fontSize: 40, fontWeight: 700, color: s.c, lineHeight: 1, marginBottom: 4 }}>{loading ? '...' : s.n}</div>
+                          <div style={{ fontSize: 12, color: 'var(--sub)' }}>{s.l}</div>
                         </div>
                       ))}
-                      {!leads.length && <EmptyState text="No leads yet" />}
-                    </AdminCard>
+                    </div>
 
-                    {/* Active projects */}
-                    <AdminCard title="Active Projects" action={{ label: 'View All', onClick: () => setTab('projects') }}>
-                      {projects.slice(0, 4).map(p => (
-                        <div key={p.id} style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '10px 0', borderBottom: '1px solid var(--bd)' }}>
-                          <div style={{ width: 36, height: 36, borderRadius: 9, background: (p.color || '#9B7FFF') + '20', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 16, flexShrink: 0 }}>{p.icon}</div>
-                          <div style={{ flex: 1 }}>
-                            <div style={{ fontSize: 13, fontWeight: 600, color: 'var(--tx)', marginBottom: 2 }}>{p.name}</div>
-                            <div style={{ fontSize: 11, color: 'var(--sub)' }}>{p.profiles?.company || p.type}</div>
-                          </div>
-                          <div style={{ textAlign: 'right' }}>
-                            <div style={{ width: 60, height: 3, background: 'var(--mut)', borderRadius: 2, marginBottom: 3 }}>
-                              <div style={{ height: '100%', borderRadius: 2, background: p.color || 'var(--coral)', width: `${p.complete}%` }} />
+                    <div style={{ display: 'grid', gridTemplateColumns: '1.4fr 1fr', gap: 16 }}>
+                      {/* Recent leads */}
+                      <AdminCard title="Recent Leads" action={{ label: 'View All', onClick: () => setTab('leads') }}>
+                        {leads.slice(0, 5).map(l => (
+                          <div key={l.id} style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '10px 0', borderBottom: '1px solid var(--bd)' }}>
+                            <div style={{ flex: 1 }}>
+                              <div style={{ fontSize: 13, fontWeight: 600, color: 'var(--tx)', marginBottom: 2 }}>{l.name}</div>
+                              <div style={{ fontSize: 11, color: 'var(--sub)' }}>{l.service} · {l.email}</div>
                             </div>
-                            <div style={{ fontSize: 10, fontWeight: 700, color: p.color || 'var(--coral)' }}>{p.complete}%</div>
-                          </div>
-                        </div>
-                      ))}
-                      {!projects.length && <EmptyState text="No projects yet" />}
-                    </AdminCard>
-                  </div>
-                </div>
-              )}
-
-              {/* ── CLIENTS ── */}
-              {tab === 'clients' && (
-                <div>
-                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 24 }}>
-                    <SectionTitle>All Clients</SectionTitle>
-                    <button onClick={() => setTab('newclient')} style={{ fontSize: 13, fontWeight: 700, padding: '10px 22px', borderRadius: 100, background: 'var(--lime)', color: '#0E0C0A', border: 'none', cursor: 'none' }}>
-                      + Add New Client
-                    </button>
-                  </div>
-                  {!clients.length && <EmptyState text="No clients yet — add your first client using the form" />}
-                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 12 }}>
-                    {clients.map(c => (
-                      <div key={c.id} onClick={() => setViewClient(c)}
-                        style={{ background: 'var(--s1)', border: '1px solid var(--bd)', borderRadius: 14, padding: 24, transition: 'all .2s', cursor: 'none' }}
-                        onMouseEnter={e => e.currentTarget.style.borderColor = 'var(--bd2)'}
-                        onMouseLeave={e => e.currentTarget.style.borderColor = 'var(--bd)'}
-                      >
-                        <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 16 }}>
-                          <div style={{ width: 44, height: 44, borderRadius: '50%', background: 'linear-gradient(135deg,var(--coral),var(--violet))', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 14, color: '#fff', flexShrink: 0 }}>
-                            {getInitials(c.full_name)}
-                          </div>
-                          <div>
-                            <div style={{ fontFamily: 'var(--font-display)', fontSize: 16, fontWeight: 700 }}>{c.full_name || 'Unnamed'}</div>
-                            <div style={{ fontSize: 12, color: 'var(--sub)' }}>{c.company || '—'}</div>
-                          </div>
-                        </div>
-                        <div style={{ fontSize: 12, color: 'var(--sub)', marginBottom: 4 }}>📧 {c.phone || '—'}</div>
-                        <div style={{ fontSize: 12, color: 'var(--sub)', marginBottom: 16 }}>📍 {c.city || '—'}</div>
-                        <div style={{ fontSize: 11, color: 'var(--mut)', fontFamily: 'monospace', background: 'var(--s2)', padding: '4px 8px', borderRadius: 6, wordBreak: 'break-all' }}>
-                          {c.id}
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
-
-              {/* ── LEADS ── */}
-              {tab === 'leads' && (
-                <div>
-                  <SectionTitle>All Leads</SectionTitle>
-                  {!leads.length && <EmptyState text="No leads yet — they appear here when someone fills the contact form" />}
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-                    {leads.map(l => (
-                      <div key={l.id} style={{ background: 'var(--s1)', border: '1px solid var(--bd)', borderRadius: 14, padding: '18px 24px', display: 'flex', alignItems: 'flex-start', gap: 16 }}>
-                        <div style={{ flex: 1 }}>
-                          <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 6 }}>
-                            <div style={{ fontFamily: 'var(--font-display)', fontSize: 16, fontWeight: 700 }}>{l.name}</div>
                             <span style={{ fontSize: 10, fontWeight: 700, padding: '3px 10px', borderRadius: 100, background: STATUS_CONFIG[l.status]?.bg, color: STATUS_CONFIG[l.status]?.color }}>
                               {STATUS_CONFIG[l.status]?.label}
                             </span>
                           </div>
-                          <div style={{ fontSize: 13, color: 'var(--sub)', marginBottom: 4 }}>📧 {l.email} · 🛠 {l.service}</div>
-                          <div style={{ fontSize: 13, color: 'var(--sub)', lineHeight: 1.6 }}>{l.message}</div>
-                          <div style={{ fontSize: 11, color: 'var(--mut)', marginTop: 8 }}>{new Date(l.created_at).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' })}</div>
+                        ))}
+                        {!leads.length && <EmptyState text="No leads yet" />}
+                      </AdminCard>
+
+                      {/* Active projects */}
+                      <AdminCard title="Active Projects" action={{ label: 'View All', onClick: () => setTab('projects') }}>
+                        {projects.slice(0, 4).map(p => (
+                          <div key={p.id} style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '10px 0', borderBottom: '1px solid var(--bd)' }}>
+                            <div style={{ width: 36, height: 36, borderRadius: 9, background: (p.color || '#9B7FFF') + '20', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 16, flexShrink: 0 }}>{p.icon}</div>
+                            <div style={{ flex: 1 }}>
+                              <div style={{ fontSize: 13, fontWeight: 600, color: 'var(--tx)', marginBottom: 2 }}>{p.name}</div>
+                              <div style={{ fontSize: 11, color: 'var(--sub)' }}>{p.profiles?.company || p.type}</div>
+                            </div>
+                            <div style={{ textAlign: 'right' }}>
+                              <div style={{ width: 60, height: 3, background: 'var(--mut)', borderRadius: 2, marginBottom: 3 }}>
+                                <div style={{ height: '100%', borderRadius: 2, background: p.color || 'var(--coral)', width: `${p.complete}%` }} />
+                              </div>
+                              <div style={{ fontSize: 10, fontWeight: 700, color: p.color || 'var(--coral)' }}>{p.complete}%</div>
+                            </div>
+                          </div>
+                        ))}
+                        {!projects.length && <EmptyState text="No projects yet" />}
+                      </AdminCard>
+                    </div>
+                  </div>
+                )}
+
+                {/* ── CLIENTS ── */}
+                {tab === 'clients' && (
+                  <div>
+                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 24 }}>
+                      <SectionTitle>All Clients</SectionTitle>
+                      <button onClick={() => setTab('newclient')} style={{ fontSize: 13, fontWeight: 700, padding: '10px 22px', borderRadius: 100, background: 'var(--lime)', color: '#0E0C0A', border: 'none', cursor: 'none' }}>
+                        + Add New Client
+                      </button>
+                    </div>
+                    {!clients.length && <EmptyState text="No clients yet — add your first client using the form" />}
+                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 12 }}>
+                      {clients.map(c => (
+                        <div key={c.id} onClick={() => setViewClient(c)}
+                          style={{ background: 'var(--s1)', border: '1px solid var(--bd)', borderRadius: 14, padding: 24, transition: 'all .2s', cursor: 'none' }}
+                          onMouseEnter={e => e.currentTarget.style.borderColor = 'var(--bd2)'}
+                          onMouseLeave={e => e.currentTarget.style.borderColor = 'var(--bd)'}
+                        >
+                          <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 16 }}>
+                            <div style={{ width: 44, height: 44, borderRadius: '50%', background: 'linear-gradient(135deg,var(--coral),var(--violet))', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 14, color: '#fff', flexShrink: 0 }}>
+                              {getInitials(c.full_name)}
+                            </div>
+                            <div>
+                              <div style={{ fontFamily: 'var(--font-display)', fontSize: 16, fontWeight: 700 }}>{c.full_name || 'Unnamed'}</div>
+                              <div style={{ fontSize: 12, color: 'var(--sub)' }}>{c.company || '—'}</div>
+                            </div>
+                          </div>
+                          <div style={{ fontSize: 12, color: 'var(--sub)', marginBottom: 4 }}>📧 {c.phone || '—'}</div>
+                          <div style={{ fontSize: 12, color: 'var(--sub)', marginBottom: 16 }}>📍 {c.city || '—'}</div>
+                          <div style={{ fontSize: 11, color: 'var(--mut)', fontFamily: 'monospace', background: 'var(--s2)', padding: '4px 8px', borderRadius: 6, wordBreak: 'break-all' }}>
+                            {c.id}
+                          </div>
                         </div>
-                        {/* Status changer */}
-                        <div style={{ display: 'flex', flexDirection: 'column', gap: 6, flexShrink: 0 }}>
-                          {Object.entries(STATUS_CONFIG).map(([key, val]) => (
-                            <button key={key} onClick={() => updateLeadStatus(l.id, key)}
-                              style={{ fontSize: 10, fontWeight: 700, padding: '4px 10px', borderRadius: 100, border: 'none', cursor: 'none', background: l.status === key ? val.bg : 'transparent', color: l.status === key ? val.color : 'var(--mut)', transition: 'all .2s' }}>
-                              {val.label}
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* ── LEADS ── */}
+                {tab === 'leads' && (
+                  <div>
+                    <SectionTitle>All Leads</SectionTitle>
+                    {!leads.length && <EmptyState text="No leads yet — they appear here when someone fills the contact form" />}
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+                      {leads.map(l => (
+                        <div key={l.id} style={{ background: 'var(--s1)', border: '1px solid var(--bd)', borderRadius: 14, padding: '18px 24px', display: 'flex', alignItems: 'flex-start', gap: 16 }}>
+                          <div style={{ flex: 1 }}>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 6 }}>
+                              <div style={{ fontFamily: 'var(--font-display)', fontSize: 16, fontWeight: 700 }}>{l.name}</div>
+                              <span style={{ fontSize: 10, fontWeight: 700, padding: '3px 10px', borderRadius: 100, background: STATUS_CONFIG[l.status]?.bg, color: STATUS_CONFIG[l.status]?.color }}>
+                                {STATUS_CONFIG[l.status]?.label}
+                              </span>
+                            </div>
+                            <div style={{ fontSize: 13, color: 'var(--sub)', marginBottom: 4 }}>📧 {l.email} · 🛠 {l.service}</div>
+                            <div style={{ fontSize: 13, color: 'var(--sub)', lineHeight: 1.6 }}>{l.message}</div>
+                            <div style={{ fontSize: 11, color: 'var(--mut)', marginTop: 8 }}>{new Date(l.created_at).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' })}</div>
+                          </div>
+                          {/* Status changer */}
+                          <div style={{ display: 'flex', flexDirection: 'column', gap: 6, flexShrink: 0 }}>
+                            {Object.entries(STATUS_CONFIG).map(([key, val]) => (
+                              <button key={key} onClick={() => updateLeadStatus(l.id, key)}
+                                style={{ fontSize: 10, fontWeight: 700, padding: '4px 10px', borderRadius: 100, border: 'none', cursor: 'none', background: l.status === key ? val.bg : 'transparent', color: l.status === key ? val.color : 'var(--mut)', transition: 'all .2s' }}>
+                                {val.label}
+                              </button>
+                            ))}
+                            {/* Convert to client button */}
+                            <button onClick={() => { setTab('newclient') }}
+                              style={{ fontSize: 10, fontWeight: 700, padding: '6px 10px', borderRadius: 100, border: '1px solid var(--lime)', cursor: 'none', background: 'rgba(197,241,53,.08)', color: 'var(--lime)', marginTop: 4, transition: 'all .2s' }}>
+                              → Make Client
                             </button>
-                          ))}
-                          {/* Convert to client button */}
-                          <button onClick={() => { setTab('newclient') }}
-                            style={{ fontSize: 10, fontWeight: 700, padding: '6px 10px', borderRadius: 100, border: '1px solid var(--lime)', cursor: 'none', background: 'rgba(197,241,53,.08)', color: 'var(--lime)', marginTop: 4, transition: 'all .2s' }}>
-                            → Make Client
-                          </button>
+                          </div>
                         </div>
-                      </div>
-                    ))}
+                      ))}
+                    </div>
                   </div>
-                </div>
-              )}
+                )}
 
-              {/* ── PROJECTS ── */}
-              {tab === 'projects' && (
-                <div>
-                  <SectionTitle>All Projects</SectionTitle>
-                  {!projects.length && <EmptyState text="No projects yet" />}
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-                    {projects.map(p => (
-                      <div key={p.id} style={{ background: 'var(--s1)', border: '1px solid var(--bd)', borderRadius: 14, padding: '20px 24px', display: 'flex', alignItems: 'center', gap: 16, transition: 'border-color .2s' }}
-                        onMouseEnter={e => e.currentTarget.style.borderColor = 'var(--bd2)'}
-                        onMouseLeave={e => e.currentTarget.style.borderColor = 'var(--bd)'}
-                      >
-                        <div style={{ width: 48, height: 48, borderRadius: 12, background: (p.color || '#9B7FFF') + '20', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 22, flexShrink: 0 }}>{p.icon}</div>
-                        <div style={{ flex: 1 }}>
-                          <div style={{ fontFamily: 'var(--font-display)', fontSize: 17, fontWeight: 700, marginBottom: 3 }}>{p.name}</div>
-                          <div style={{ fontSize: 12, color: 'var(--sub)' }}>{p.profiles?.full_name || 'Unknown Client'} · {p.profiles?.company || ''} · {p.type}</div>
+                {/* ── PROJECTS ── */}
+                {tab === 'projects' && (
+                  <div>
+                    <SectionTitle>All Projects</SectionTitle>
+                    {!projects.length && <EmptyState text="No projects yet" />}
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+                      {projects.map(p => (
+                        <div key={p.id} style={{ background: 'var(--s1)', border: '1px solid var(--bd)', borderRadius: 14, padding: '20px 24px', display: 'flex', alignItems: 'center', gap: 16, transition: 'border-color .2s' }}
+                          onMouseEnter={e => e.currentTarget.style.borderColor = 'var(--bd2)'}
+                          onMouseLeave={e => e.currentTarget.style.borderColor = 'var(--bd)'}
+                        >
+                          <div style={{ width: 48, height: 48, borderRadius: 12, background: (p.color || '#9B7FFF') + '20', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 22, flexShrink: 0 }}>{p.icon}</div>
+                          <div style={{ flex: 1 }}>
+                            <div style={{ fontFamily: 'var(--font-display)', fontSize: 17, fontWeight: 700, marginBottom: 3 }}>{p.name}</div>
+                            <div style={{ fontSize: 12, color: 'var(--sub)' }}>{p.profiles?.full_name || 'Unknown Client'} · {p.profiles?.company || ''} · {p.type}</div>
+                          </div>
+                          <div style={{ textAlign: 'center', padding: '0 20px' }}>
+                            <div style={{ fontFamily: 'var(--font-display)', fontSize: 24, fontWeight: 700, color: p.color || 'var(--coral)' }}>{p.complete}%</div>
+                            <div style={{ fontSize: 10, color: 'var(--sub)', textTransform: 'uppercase', letterSpacing: 1 }}>Complete</div>
+                          </div>
+                          <div style={{ textAlign: 'center', padding: '0 20px' }}>
+                            <div style={{ fontFamily: 'var(--font-display)', fontSize: 24, fontWeight: 700, color: 'var(--yellow)' }}>{p.days_left}d</div>
+                            <div style={{ fontSize: 10, color: 'var(--sub)', textTransform: 'uppercase', letterSpacing: 1 }}>To Launch</div>
+                          </div>
+                          <span style={{ fontSize: 11, fontWeight: 700, padding: '6px 14px', borderRadius: 100, background: 'rgba(155,127,255,.1)', color: 'var(--violet)' }}>{p.status}</span>
                         </div>
-                        <div style={{ textAlign: 'center', padding: '0 20px' }}>
-                          <div style={{ fontFamily: 'var(--font-display)', fontSize: 24, fontWeight: 700, color: p.color || 'var(--coral)' }}>{p.complete}%</div>
-                          <div style={{ fontSize: 10, color: 'var(--sub)', textTransform: 'uppercase', letterSpacing: 1 }}>Complete</div>
-                        </div>
-                        <div style={{ textAlign: 'center', padding: '0 20px' }}>
-                          <div style={{ fontFamily: 'var(--font-display)', fontSize: 24, fontWeight: 700, color: 'var(--yellow)' }}>{p.days_left}d</div>
-                          <div style={{ fontSize: 10, color: 'var(--sub)', textTransform: 'uppercase', letterSpacing: 1 }}>To Launch</div>
-                        </div>
-                        <span style={{ fontSize: 11, fontWeight: 700, padding: '6px 14px', borderRadius: 100, background: 'rgba(155,127,255,.1)', color: 'var(--violet)' }}>{p.status}</span>
-                      </div>
-                    ))}
+                      ))}
+                    </div>
                   </div>
-                </div>
-              )}
+                )}
 
-              {/* ── NEW CLIENT FORM ── */}
-              {tab === 'newclient' && (
-                <NewClientForm onSuccess={() => { loadData(); setTab('clients') }} />
-              )}
+                {/* ── NEW CLIENT FORM ── */}
+                {tab === 'newclient' && (
+                  <NewClientForm onSuccess={() => { loadData(); setTab('clients') }} />
+                )}
 
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
       </div>
     </div>
   )

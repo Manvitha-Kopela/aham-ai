@@ -9,9 +9,9 @@ import { Reveal } from './Sections'
 // 2. Sign up at https://emailjs.com
 // 3. Replace SERVICE_ID, TEMPLATE_ID, PUBLIC_KEY below
 // ========================================================
-const EMAILJS_SERVICE_ID = 'YOUR_SERVICE_ID'
-const EMAILJS_TEMPLATE_ID = 'YOUR_TEMPLATE_ID'
-const EMAILJS_PUBLIC_KEY = 'YOUR_PUBLIC_KEY'
+const EMAILJS_SERVICE_ID = 'service_wnttwlo'
+const EMAILJS_TEMPLATE_ID = 'template_8djcey8'
+const EMAILJS_PUBLIC_KEY = 'yY7JZ073Sn8c89Cwi'
 
 export default function Contact() {
   const { t } = useLang()
@@ -34,28 +34,24 @@ export default function Contact() {
 
     // ---- EmailJS integration ----
     // Uncomment when you have your EmailJS credentials:
-    /*
+
     try {
       const emailjs = await import('@emailjs/browser')
       await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
-        from_name: form.name,
-        from_email: form.email,
-        service: form.service,
+        name: form.name,
+        email: form.email,
+        title: form.service,
         message: form.msg,
-        to_email: 'hello@aham.ai',
       }, EMAILJS_PUBLIC_KEY)
       setStatus('success')
       setForm({ name: '', email: '', service: 'Web Design & Development', msg: '' })
     } catch (err) {
       setStatus('error')
     }
-    */
+
 
     // Simulated success for demo:
-    setTimeout(() => {
-      setStatus('success')
-      setForm({ name: '', email: '', service: 'Web Design & Development', msg: '' })
-    }, 1400)
+
   }
 
   const services = ['Web Design & Development', 'SEO & Content Strategy', 'Brand Identity & Design', 'Video & Content Creation', 'Social Media Management', 'Full Digital Package']
