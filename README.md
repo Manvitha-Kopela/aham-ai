@@ -223,4 +223,4 @@ In `index.html`, replace the Google Fonts link. Then update in `globals.css`:
 ---
 
 ## 📞 Support
-Made by Aham.ai — hello@aham.ai
+Made by Aham.ai — ahamaidigitalworks@gmail.com
