@@ -134,7 +134,7 @@ export default function InstagramFeed() {
 
         {/* Skeleton */}
         {loading && (
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: 8 }}>
+          <div className="instagram-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: 8 }}>
             {Array.from({ length: 12 }).map((_, i) => (
               <div key={i} style={{ aspectRatio: '1', borderRadius: 10, background: 'var(--s1)', animation: 'igShimmer 1.4s ease-in-out infinite', animationDelay: `${i * 0.07}s` }} />
             ))}
@@ -143,7 +143,7 @@ export default function InstagramFeed() {
 
         {/* Grid */}
         {!loading && (
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: 8 }}>
+          <div className="instagram-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: 8 }}>
             {posts.map((post, i) => (
               <PostTile
                 key={post.id || i}
@@ -163,16 +163,6 @@ export default function InstagramFeed() {
         )}
 
       </Reveal>
-
-      <style>{`
-        @keyframes igShimmer { 0%,100%{opacity:.3} 50%{opacity:.65} }
-        @media(max-width:900px){
-          #instagram [style*="repeat(4,1fr)"]{grid-template-columns:repeat(3,1fr)!important;}
-        }
-        @media(max-width:540px){
-          #instagram [style*="repeat(4,1fr)"]{grid-template-columns:repeat(2,1fr)!important;}
-        }
-      `}</style>
     </section>
   )
 }

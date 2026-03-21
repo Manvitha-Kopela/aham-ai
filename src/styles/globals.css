@@ -129,9 +129,52 @@ img { max-width: 100%; display: block; }
 ::-webkit-scrollbar-track { background: var(--bg); }
 ::-webkit-scrollbar-thumb { background: var(--mut); border-radius: 3px; }
 
+/* ===== ANIMATIONS ===== */
+@keyframes heroBlink { 0%,100%{opacity:1} 50%{opacity:.2} }
+@keyframes igShimmer { 0%,100%{opacity:.3} 50%{opacity:.65} }
+
 /* ===== RESPONSIVE ===== */
 @media (max-width: 900px) {
-  .section { padding: 56px 20px; }
+  .section { padding: 56px 24px; }
+  .section-header { align-items: flex-start; }
   body { cursor: auto; }
   .cursor-dot, .cursor-ring { display: none; }
+  
+  .stats-grid { grid-template-columns: repeat(2, 1fr) !important; }
+  .stats-item:nth-child(2) { border-right: none !important; }
+  .stats-item:nth-child(1), .stats-item:nth-child(2) { border-bottom: 1px solid var(--bd); }
+}
+
+@media (max-width: 768px) {
+  .footer-container { padding: 40px 24px !important; flex-direction: column; text-align: center; }
+  .footer-links { flex-wrap: wrap; justify-content: center; gap: 12px 20px !important; }
+  .portfolio-grid { grid-template-columns: 1fr !important; }
+  .portfolio-item { grid-column: span 1 !important; }
+}
+
+@media (max-width: 640px) {
+  .section { padding: 48px 20px; }
+  .stats-grid { grid-template-columns: 1fr !important; }
+  .stats-item { border-right: none !important; border-bottom: 1px solid var(--bd); padding: 30px 20px !important; }
+  .stats-item:last-child { border-bottom: none; }
+  
+  .services-grid { grid-template-columns: 1fr !important; }
+  .svc-1, .svc-2, .svc-3, .svc-4, .svc-5, .svc-6, .svc-7 { grid-column: span 1 !important; grid-row: auto !important; }
+  
+  .process-grid { grid-template-columns: 1fr !important; }
+  .process-step { border-right: none !important; border-bottom: 1px solid var(--bd); }
+  .process-step:last-child { border-bottom: none; }
+
+  .ct-form-grid { grid-template-columns: 1fr !important; }
+  .ct-f-wide { grid-column: span 1 !important; }
+  
+  .pricing-grid { grid-template-columns: 1fr !important; }
+  
+  .team-works-grid { flex-direction: column !important; }
+  
+  .instagram-grid { grid-template-columns: repeat(2, 1fr) !important; }
+}
+
+@media (max-width: 400px) {
+  .instagram-grid { grid-template-columns: 1fr !important; }
 }

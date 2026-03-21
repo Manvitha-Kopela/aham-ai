@@ -39,7 +39,7 @@ export default function Pricing() {
 
       {/* Cards */}
       <Reveal delay={0.15}>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 12 }}>
+        <div className="pricing-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 12 }}>
           {PLANS.map((plan, i) => (
             <motion.div key={plan.name}
               whileHover={{ y: -4 }}
@@ -119,9 +119,12 @@ export default function Pricing() {
       </Reveal>
 
       <style>{`
-        @media(max-width:900px){
+        @media(max-width: 1024px) {
+          .pricing-grid { grid-template-columns: repeat(2, 1fr) !important; }
+        }
+        @media(max-width: 640px) {
+          .pricing-grid { grid-template-columns: 1fr !important; }
           #pricing .section-title { font-size: 32px; }
-          #pricing > div:last-child > div { grid-template-columns: 1fr !important; }
         }
       `}</style>
     </section>

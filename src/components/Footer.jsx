@@ -11,14 +11,14 @@ export default function Footer({ onAdminOpen }) {
   ]
 
   return (
-    <footer style={{ borderTop: '1px solid var(--bd)', padding: '28px 48px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 14 }}>
+    <footer className="footer-container" style={{ borderTop: '1px solid var(--bd)', padding: '28px 48px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 24 }}>
       <div style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 17 }}>
         Aham<b style={{ color: 'var(--coral)' }}>.ai</b>
       </div>
 
-      <div style={{ display: 'flex', gap: 20 }}>
+      <div className="footer-links" style={{ display: 'flex', gap: 20 }}>
         {links.map(l => (
-          <button key={l.label} onClick={() => l.id && scrollTo(l.id)} style={{ fontSize: 12, color: 'var(--sub)', background: 'none', border: 'none', cursor: 'none', fontFamily: 'var(--font-body)', transition: 'color .2s' }}
+          <button key={l.label} onClick={() => l.id && scrollTo(l.id)} style={{ fontSize: 12, color: 'var(--sub)', background: 'none', border: 'none', cursor: 'none', fontFamily: 'var(--font-body)', transition: 'color .2s', whiteSpace: 'nowrap' }}
             onMouseEnter={e => e.target.style.color = 'var(--tx)'}
             onMouseLeave={e => e.target.style.color = 'var(--sub)'}
           >

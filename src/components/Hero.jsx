@@ -289,8 +289,11 @@ export default function Hero() {
           #hero { gap:32px !important; padding:100px 32px 60px !important; }
         }
         @media(max-width:900px){
-          #hero { grid-template-columns:1fr !important; padding:100px 20px 48px !important; min-height:auto !important; }
-          #hero > div:last-child { display:none !important; }
+          #hero { grid-template-columns:1fr !important; padding:100px 20px 48px !important; min-height:auto !important; text-align: center; }
+          #hero > div:first-of-type { display: flex; flex-direction: column; align-items: center; }
+          #hero p { margin-left: auto; margin-right: auto; }
+          #hero .btn-primary, #hero .btn-ghost { width: 100%; justify-content: center; }
+          #hero > div:last-child { margin-top: 40px; }
         }
       `}</style>
     </section>

@@ -52,16 +52,15 @@ export function Stats() {
   ]
   return (
     <Reveal>
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', borderBottom: '1px solid var(--bd)' }}>
+      <div className="stats-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', borderBottom: '1px solid var(--bd)' }}>
         {items.map((s, i) => (
-          <div key={i} style={{ padding: '40px', borderRight: i < 3 ? '1px solid var(--bd)' : 'none' }}>
+          <div key={i} className="stats-item" style={{ padding: '40px', borderRight: i < 3 ? '1px solid var(--bd)' : 'none' }}>
             <div style={{ fontFamily: 'var(--font-display)', fontSize: 50, fontWeight: 700, lineHeight: 1, letterSpacing: -2, marginBottom: 6 }}>
               {s.n}<b style={{ color: 'var(--coral)' }}>{s.sup}</b>
             </div>
             <div style={{ fontSize: 13, color: 'var(--sub)' }}>{s.label}</div>
           </div>
         ))}
-        <style>{`@media(max-width:900px){.stats-row{grid-template-columns:1fr 1fr!important;}}`}</style>
       </div>
     </Reveal>
   )
@@ -74,10 +73,10 @@ export function Services() {
     <section className="section bd-b" id="services">
       <Reveal><div className="eyebrow">{t.sections.services}</div></Reveal>
       <Reveal delay={0.1}>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(12,1fr)', gridAutoRows: 'minmax(190px,auto)', gap: 10 }}>
+        <div className="services-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(12,1fr)', gridAutoRows: 'minmax(190px,auto)', gap: 10 }}>
 
           {/* Featured — Web Design */}
-          <BentoCard span={7} tall featured>
+          <BentoCard span={7} tall featured className="svc-1">
             <span style={{ fontSize: 11, fontWeight: 700, letterSpacing: 1, color: 'rgba(255,255,255,.5)', marginBottom: 'auto', display: 'block' }}>01 — Flagship</span>
             <div>
               <div style={{ fontSize: 26, marginBottom: 14 }}>⬡</div>
@@ -90,7 +89,7 @@ export function Services() {
           </BentoCard>
 
           {/* Stat */}
-          <BentoCard span={5} dark>
+          <BentoCard span={5} dark className="svc-2">
             <span style={{ fontSize: 11, fontWeight: 700, letterSpacing: 1, color: 'var(--mut)' }}>Avg. Result</span>
             <div>
               <div style={{ fontFamily: 'var(--font-display)', fontSize: 58, fontWeight: 700, lineHeight: 1, letterSpacing: -2 }}>
@@ -101,7 +100,7 @@ export function Services() {
           </BentoCard>
 
           {/* SEO */}
-          <BentoCard span={5}>
+          <BentoCard span={5} className="svc-3">
             <span style={{ fontSize: 11, fontWeight: 700, letterSpacing: 1, color: 'var(--mut)' }}>02</span>
             <div>
               <div style={{ fontSize: 26, marginBottom: 14 }}>◎</div>
@@ -114,7 +113,7 @@ export function Services() {
           </BentoCard>
 
           {/* Brand */}
-          <BentoCard span={4}>
+          <BentoCard span={4} className="svc-4">
             <span style={{ fontSize: 11, fontWeight: 700, letterSpacing: 1, color: 'var(--mut)' }}>03</span>
             <div>
               <div style={{ fontSize: 26, marginBottom: 14 }}>◈</div>
@@ -124,7 +123,7 @@ export function Services() {
           </BentoCard>
 
           {/* Video */}
-          <BentoCard span={3}>
+          <BentoCard span={3} className="svc-5">
             <span style={{ fontSize: 11, fontWeight: 700, letterSpacing: 1, color: 'var(--mut)' }}>04</span>
             <div>
               <div style={{ fontSize: 26, marginBottom: 14 }}>▶</div>
@@ -134,7 +133,7 @@ export function Services() {
           </BentoCard>
 
           {/* Social */}
-          <BentoCard span={6} lime>
+          <BentoCard span={6} lime className="svc-6">
             <span style={{ fontSize: 11, fontWeight: 700, letterSpacing: 1, color: 'rgba(14,12,10,.4)' }}>05</span>
             <div>
               <div style={{ fontSize: 26, marginBottom: 14 }}>📱</div>
@@ -144,7 +143,7 @@ export function Services() {
           </BentoCard>
 
           {/* Languages */}
-          <BentoCard span={6} dark>
+          <BentoCard span={6} dark className="svc-7">
             <span style={{ fontSize: 11, fontWeight: 700, letterSpacing: 1, color: 'var(--mut)' }}>We work in your language</span>
             <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginTop: 'auto' }}>
               {['🇮🇳 Telugu','🇮🇳 Hindi','🇬🇧 English','🇪🇸 Español'].map(l => (
@@ -158,10 +157,10 @@ export function Services() {
   )
 }
 
-function BentoCard({ children, span = 6, tall, featured, dark, lime }) {
+function BentoCard({ children, span = 6, tall, featured, dark, lime, className }) {
   const bg = featured ? 'var(--coral)' : lime ? 'var(--lime)' : dark ? 'var(--s2)' : 'var(--s1)'
   return (
-    <div style={{
+    <div className={className} style={{
       gridColumn: `span ${span}`, ...(tall ? { gridRow: 'span 2' } : {}),
       background: bg, border: `1px solid ${featured ? 'var(--coral)' : lime ? 'var(--lime)' : 'var(--bd)'}`,
       borderRadius: 16, padding: 32,
@@ -200,9 +199,9 @@ export function Portfolio() {
         </div>
       </Reveal>
       <Reveal delay={0.1}>
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
+        <div className="portfolio-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
           {PORTFOLIO.map(p => (
-            <div key={p.id} style={{
+            <div key={p.id} className="portfolio-item" style={{
               gridColumn: p.wide ? 'span 2' : 'span 1',
               borderRadius: 16, overflow: 'hidden',
               background: 'var(--s1)', border: '1px solid var(--bd)',
@@ -249,9 +248,9 @@ export function Process() {
     <section className="section bd-b" id="process">
       <Reveal><div className="eyebrow">{t.process.title}</div></Reveal>
       <Reveal delay={0.1}>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', border: '1px solid var(--bd)', borderRadius: 16, overflow: 'hidden' }}>
+        <div className="process-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', border: '1px solid var(--bd)', borderRadius: 16, overflow: 'hidden' }}>
           {steps.map((s, i) => (
-            <div key={i} style={{
+            <div key={i} className="process-step" style={{
               padding: '36px 30px',
               borderRight: i < 3 ? '1px solid var(--bd)' : 'none',
               transition: 'background .25s',

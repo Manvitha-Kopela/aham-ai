@@ -26,17 +26,26 @@ export function Team() {
 
       {/* Top 3 */}
       <Reveal delay={0.1}>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 12, marginBottom: 12 }}>
+        <div className="team-grid-top" style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 12, marginBottom: 12 }}>
           {topThree.map(m => <TeamCard key={m.id} member={m} />)}
         </div>
       </Reveal>
 
       {/* Bottom 2 — wide cards */}
       <Reveal delay={0.2}>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2,1fr)', gap: 12 }}>
+        <div className="team-grid-bottom" style={{ display: 'grid', gridTemplateColumns: 'repeat(2,1fr)', gap: 12 }}>
           {bottomTwo.map(m => <TeamCardWide key={m.id} member={m} />)}
         </div>
       </Reveal>
+      <style>{`
+        @media(max-width: 1024px) {
+          .team-grid-top { grid-template-columns: repeat(2, 1fr) !important; }
+          .team-grid-bottom { grid-template-columns: 1fr !important; }
+        }
+        @media(max-width: 640px) {
+          .team-grid-top { grid-template-columns: 1fr !important; }
+        }
+      `}</style>
     </section>
   )
 }
@@ -72,7 +81,7 @@ function TeamCard({ member: m }) {
       {/* Works */}
       <div style={{ padding: '0 24px 16px' }}>
         <div style={{ fontSize: 10, fontWeight: 700, textTransform: 'uppercase', letterSpacing: 2, color: 'var(--mut)', marginBottom: 10 }}>{t.common.recentWork}</div>
-        <div style={{ display: 'flex', gap: 8 }}>
+        <div className="team-works-grid" style={{ display: 'flex', gap: 8 }}>
           {m.works.map(w => (
             <div key={w.name} style={{ flex: 1, background: 'var(--s2)', borderRadius: 8, padding: '8px 10px', border: '1px solid var(--bd)' }}>
               <div style={{ width: 7, height: 7, borderRadius: '50%', background: w.color, marginBottom: 5 }} />
@@ -100,6 +109,7 @@ function TeamCardWide({ member: m }) {
   const { t } = useLang()
   return (
     <motion.div whileHover={{ y: -4 }} transition={{ duration: .25 }}
+      className="team-card-wide"
       style={{ background: 'var(--s1)', border: '1px solid var(--bd)', borderRadius: 16, overflow: 'hidden', display: 'grid', gridTemplateColumns: '180px 1fr' }}
     >
       <div style={{ background: m.bgGradient, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 8, minHeight: 200 }}>
@@ -121,9 +131,9 @@ function TeamCardWide({ member: m }) {
             {m.skills.map(s => <span key={s} style={{ fontSize: 11, fontWeight: 600, padding: '3px 10px', borderRadius: 100, border: '1px solid var(--bd)', color: 'var(--sub)' }}>{s}</span>)}
           </div>
         </div>
-        <div style={{ padding: '0 24px 16px' }}>
+        <div className="recent-work-container" style={{ padding: '0 24px 16px' }}>
           <div style={{ fontSize: 10, fontWeight: 700, textTransform: 'uppercase', letterSpacing: 2, color: 'var(--mut)', marginBottom: 10 }}>{t.common.recentWork}</div>
-          <div style={{ display: 'flex', gap: 8 }}>
+          <div className="team-works-grid" style={{ display: 'flex', gap: 8 }}>
             {m.works.map(w => (
               <div key={w.name} style={{ flex: 1, background: 'var(--s2)', borderRadius: 8, padding: '8px 10px', border: '1px solid var(--bd)' }}>
                 <div style={{ width: 7, height: 7, borderRadius: '50%', background: w.color, marginBottom: 5 }} />
@@ -134,6 +144,12 @@ function TeamCardWide({ member: m }) {
           </div>
         </div>
       </div>
+      <style>{`
+        @media(max-width: 640px) {
+          .team-card-wide { grid-template-columns: 1fr !important; }
+          .recent-work-container { display: none; }
+        }
+      `}</style>
     </motion.div>
   )
 }
@@ -202,7 +218,7 @@ export function Blog() {
         </div>
       </Reveal>
       <Reveal delay={0.1}>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 12 }}>
+        <div className="blog-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 12 }}>
           {POSTS.map(post => (
             <motion.div key={post.id} whileHover={{ y: -4 }} transition={{ duration: .25 }}
               style={{ background: 'var(--s1)', border: '1px solid var(--bd)', borderRadius: 16, overflow: 'hidden', cursor: 'none' }}
@@ -224,6 +240,14 @@ export function Blog() {
             </motion.div>
           ))}
         </div>
+        <style>{`
+          @media(max-width: 1024px) {
+            .blog-grid { grid-template-columns: repeat(2, 1fr) !important; }
+          }
+          @media(max-width: 640px) {
+            .blog-grid { grid-template-columns: 1fr !important; }
+          }
+        `}</style>
       </Reveal>
     </section>
   )

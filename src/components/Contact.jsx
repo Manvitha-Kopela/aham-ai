@@ -95,22 +95,22 @@ export default function Contact() {
                 {t.form.success}
               </motion.div>
             ) : (
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 14 }}>
-                <Field label={t.form.name} error={errors.name}>
+              <div className="ct-form-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 14 }}>
+                <Field label={t.form.name} error={errors.name} className="ct-f">
                   <input type="text" value={form.name} placeholder="Your full name" onChange={e => setForm({ ...form, name: e.target.value })} style={inputStyle(errors.name)} onFocus={e => e.target.style.borderColor = 'var(--coral)'} onBlur={e => e.target.style.borderColor = errors.name ? '#FF6B6B' : 'var(--bd)'} />
                 </Field>
 
-                <Field label={t.form.email} error={errors.email}>
+                <Field label={t.form.email} error={errors.email} className="ct-f">
                   <input type="email" value={form.email} placeholder="you@email.com" onChange={e => setForm({ ...form, email: e.target.value })} style={inputStyle(errors.email)} onFocus={e => e.target.style.borderColor = 'var(--coral)'} onBlur={e => e.target.style.borderColor = errors.email ? '#FF6B6B' : 'var(--bd)'} />
                 </Field>
 
-                <Field label={t.form.service} style={{ gridColumn: 'span 2' }}>
+                <Field label={t.form.service} className="ct-f-wide" style={{ gridColumn: 'span 2' }}>
                   <select value={form.service} onChange={e => setForm({ ...form, service: e.target.value })} style={{ ...inputStyle(), width: '100%' }}>
                     {services.map(s => <option key={s} value={s}>{s}</option>)}
                   </select>
                 </Field>
 
-                <Field label={t.form.msg} error={errors.msg} style={{ gridColumn: 'span 2' }}>
+                <Field label={t.form.msg} error={errors.msg} className="ct-f-wide" style={{ gridColumn: 'span 2' }}>
                   <textarea value={form.msg} rows={4} placeholder="Goals, timeline, budget range — the more detail the better." onChange={e => setForm({ ...form, msg: e.target.value })} style={{ ...inputStyle(errors.msg), resize: 'none', width: '100%' }} onFocus={e => e.target.style.borderColor = 'var(--coral)'} onBlur={e => e.target.style.borderColor = errors.msg ? '#FF6B6B' : 'var(--bd)'} />
                 </Field>
 
@@ -132,21 +132,13 @@ export default function Contact() {
           </div>
         </div>
       </Reveal>
-
-      <style>{`
-        @media(max-width:900px){
-          #contact .ct-form-grid { grid-template-columns: 1fr !important; }
-          #contact > div > div:first-child { padding: 32px 24px !important; }
-          #contact > div > div:last-child { padding: 32px 24px !important; }
-        }
-      `}</style>
     </section>
   )
 }
 
-function Field({ label, error, children, style }) {
+function Field({ label, error, children, style, className }) {
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 7, ...style }}>
+    <div className={className} style={{ display: 'flex', flexDirection: 'column', gap: 7, ...style }}>
       <label style={{ fontSize: 11, fontWeight: 700, textTransform: 'uppercase', letterSpacing: 1.5, color: 'var(--sub)' }}>{label}</label>
       {children}
       {error && <span style={{ fontSize: 11, color: '#FF6B6B' }}>{error}</span>}
